@@ -22432,16 +22432,33 @@ var App = function (_React$Component) {
   function App() {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+    _this.state = { word: '' };
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'setWord',
+    value: function setWord(e) {
+      console.log(e.target.value);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'p',
-        null,
-        'Hello World!'
+        'form',
+        { onSubmit: this.setWord },
+        _react2.default.createElement('input', {
+          type: 'text',
+          placeholder: 'Enter a new word',
+          onChange: this.setWord
+        }),
+        _react2.default.createElement(
+          'button',
+          { type: 'button', onClick: this.setWord },
+          'Add'
+        )
       );
     }
   }]);

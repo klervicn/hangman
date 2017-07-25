@@ -22435,28 +22435,37 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = { word: '' };
+    _this.updateInputValue = _this.updateInputValue.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'setWord',
-    value: function setWord(e) {
-      console.log(e.target.value);
+    key: 'updateInputValue',
+    value: function updateInputValue(e) {
+      this.setState({
+        word: e.target.value
+      });
+    }
+  }, {
+    key: 'addWord',
+    value: function addWord(e) {
+      e.preventDefault();
+      console.log('Saved word is ' + this.state.word);
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'form',
-        { onSubmit: this.setWord },
+        { onSubmit: this.addWord },
         _react2.default.createElement('input', {
           type: 'text',
           placeholder: 'Enter a new word',
-          onChange: this.setWord
+          onChange: this.updateInputValue
         }),
         _react2.default.createElement(
           'button',
-          { type: 'button', onClick: this.setWord },
+          { type: 'button', onClick: this.addWord },
           'Add'
         )
       );

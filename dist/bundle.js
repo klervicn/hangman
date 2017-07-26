@@ -22434,8 +22434,9 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
-    _this.state = { word: '' };
+    _this.state = { wordToGuess: '' };
     _this.updateInputValue = _this.updateInputValue.bind(_this);
+    _this.addWordToGuess = _this.addWordToGuess.bind(_this);
     return _this;
   }
 
@@ -22443,30 +22444,49 @@ var App = function (_React$Component) {
     key: 'updateInputValue',
     value: function updateInputValue(e) {
       this.setState({
-        word: e.target.value
+        wordToGuess: e.target.value
       });
     }
   }, {
-    key: 'addWord',
-    value: function addWord(e) {
+    key: 'addWordToGuess',
+    value: function addWordToGuess(e) {
       e.preventDefault();
-      console.log('Saved word is ' + this.state.word);
+      this.refs.wordToGuess.reset();
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'form',
-        { onSubmit: this.addWord },
-        _react2.default.createElement('input', {
-          type: 'text',
-          placeholder: 'Enter a new word',
-          onChange: this.updateInputValue
-        }),
+        'div',
+        { className: 'App' },
         _react2.default.createElement(
-          'button',
-          { type: 'button', onClick: this.addWord },
-          'Add'
+          'div',
+          { className: 'wordToGuess' },
+          _react2.default.createElement(
+            'form',
+            { onSubmit: this.addWordToGuess },
+            _react2.default.createElement('input', {
+              type: 'text',
+              placeholder: 'Enter a word to guess',
+              onChange: this.updateInputValue,
+              ref: 'wordToGuess'
+            }),
+            _react2.default.createElement(
+              'button',
+              { type: 'button', onClick: this.addWordToGuess },
+              'Add'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'guessing' },
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement('input', { type: 'text', placeholder: 'Try to guess !' }),
+            _react2.default.createElement('button', null)
+          )
         )
       );
     }

@@ -3,33 +3,45 @@ import React from 'react';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { word: '' };
+    this.state = { wordToGuess: '' };
     this.updateInputValue = this.updateInputValue.bind(this);
+    this.addWordToGuess = this.addWordToGuess.bind(this);
   }
 
   updateInputValue(e) {
     this.setState({
-      word: e.target.value
+      wordToGuess: e.target.value
     });
   }
 
-  addWord(e) {
+  addWordToGuess(e) {
     e.preventDefault();
-    console.log('Saved word is ' + this.state.word);
+    this.refs.wordToGuess.reset();
   }
 
   render() {
     return (
-      <form onSubmit={this.addWord}>
-        <input
-          type="text"
-          placeholder="Enter a new word"
-          onChange={this.updateInputValue}
-        />
-        <button type="button" onClick={this.addWord}>
-          Add
-        </button>
-      </form>
+      <div className="App">
+        <div className="wordToGuess">
+          <form onSubmit={this.addWordToGuess}>
+            <input
+              type="text"
+              placeholder="Enter a word to guess"
+              onChange={this.updateInputValue}
+              ref="wordToGuess"
+            />
+            <button type="button" onClick={this.addWordToGuess}>
+              Add
+            </button>
+          </form>
+        </div>
+        <div className="guessing">
+          <form>
+            <input type="text" placeholder="Try to guess !" />
+            <button />
+          </form>
+        </div>
+      </div>
     );
   }
 }

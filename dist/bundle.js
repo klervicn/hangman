@@ -22434,9 +22434,11 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
-    _this.state = { wordToGuess: '' };
+    _this.state = { wordToGuess: '', inputValue: '', guess: '', nbTry: 0 };
     _this.updateInputValue = _this.updateInputValue.bind(_this);
     _this.addWordToGuess = _this.addWordToGuess.bind(_this);
+    _this.updateInputGuessValue = _this.updateInputGuessValue.bind(_this);
+    _this.guessWord = _this.guessWord.bind(_this);
     return _this;
   }
 
@@ -22444,14 +22446,44 @@ var App = function (_React$Component) {
     key: 'updateInputValue',
     value: function updateInputValue(e) {
       this.setState({
-        wordToGuess: e.target.value
+        wordToGuess: e.target.value,
+        inputValue: e.target.value
       });
     }
   }, {
     key: 'addWordToGuess',
     value: function addWordToGuess(e) {
       e.preventDefault();
-      this.refs.wordToGuess.reset();
+      this.setState({
+        inputValue: ''
+      });
+    }
+  }, {
+    key: 'updateInputGuessValue',
+    value: function updateInputGuessValue(e) {
+      this.setState({
+        guess: e.target.value
+      });
+    }
+  }, {
+    key: 'guessWord',
+    value: function guessWord(e) {
+      e.preventDefault();
+      console.log(this.state.guess + ' ' + this.state.wordToGuess);
+
+      if (this.state.guess === this.state.wordToGuess) {
+        console.log("C'est bon gg");
+        this.setState({
+          nbTry: 0
+        });
+      } else {
+        {
+          this.setState({
+            nbTry: this.state.nbTry++
+          });
+          console.log('Nope essaie encore. Essai n° ' + this.state.nbTry);
+        }
+      }
     }
   }, {
     key: 'render',
@@ -22469,11 +22501,12 @@ var App = function (_React$Component) {
               type: 'text',
               placeholder: 'Enter a word to guess',
               onChange: this.updateInputValue,
-              ref: 'wordToGuess'
+              ref: 'wordToGuess',
+              value: this.state.inputValue
             }),
             _react2.default.createElement(
               'button',
-              { type: 'button', onClick: this.addWordToGuess },
+              { onClick: this.addWordToGuess },
               'Add'
             )
           )
@@ -22483,9 +22516,17 @@ var App = function (_React$Component) {
           { className: 'guessing' },
           _react2.default.createElement(
             'form',
-            null,
-            _react2.default.createElement('input', { type: 'text', placeholder: 'Try to guess !' }),
-            _react2.default.createElement('button', null)
+            { onSubmit: this.guessWord },
+            _react2.default.createElement('input', {
+              type: 'text',
+              placeholder: 'Try to guess !',
+              onChange: this.updateInputGuessValue
+            }),
+            _react2.default.createElement(
+              'button',
+              { onClick: this.guessWord },
+              'Try'
+            )
           )
         )
       );

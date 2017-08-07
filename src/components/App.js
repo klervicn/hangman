@@ -33,6 +33,7 @@ class App extends React.Component {
   }
 
   updateInputGuessValue(e) {
+    e.preventDefault;
     this.setState({
       guess: e.target.value,
       inputGuessValue: e.target.value
@@ -62,20 +63,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div className="wordToGuess">
-          <form onSubmit={this.addWordToGuess}>
-            <input
-              type="text"
-              placeholder="Enter a word to guess"
-              onChange={this.updateInputValue}
-              ref="wordToGuess"
-              value={this.state.inputValue}
-            />
-            <button onClick={this.addWordToGuess}>Add</button>
-          </form>
-        </div>
         <div className="guessing">
-
           {this.state.isWordToGuessSet
             ? <form onSubmit={this.guessWord}>
                 <input
@@ -86,16 +74,29 @@ class App extends React.Component {
                 />
                 <button onClick={this.guessWord}>Try</button>
               </form>
-            : ''}
-          <p>
-            {this.state.wordToGuess !== '' &&
-              this.state.isWordToGuessSet &&
-              this.state.wordToGuess === this.state.guess
-              ? 'GG'
-              : ''}
-          </p>
-          <p>{this.state.nbTry === 0 ? '' : 'Essai n° ' + this.state.nbTry}</p>
+            : <div className="wordToGuess">
+                <form onSubmit={this.addWordToGuess}>
+                  <input
+                    type="text"
+                    placeholder="Enter a word to guess"
+                    onChange={this.updateInputValue}
+                    ref="wordToGuess"
+                    value={this.state.inputValue}
+                  />
+                  <button onClick={this.addWordToGuess}>Add</button>
+                </form>
+              </div>}
         </div>
+        <p>
+          {this.state.wordToGuess !== '' &&
+          this.state.wordToGuess === this.state.guess &&
+          this.state.inputGuessValue === ''
+            ? 'GG'
+            : ''}
+        </p>
+        <p>
+          {this.state.nbTry === 0 ? '' : 'Essai n° ' + this.state.nbTry}
+        </p>
       </div>
     );
   }

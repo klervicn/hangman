@@ -22469,6 +22469,7 @@ var App = function (_React$Component) {
   }, {
     key: 'updateInputGuessValue',
     value: function updateInputGuessValue(e) {
+      e.preventDefault;
       this.setState({
         guess: e.target.value,
         inputGuessValue: e.target.value
@@ -22505,26 +22506,6 @@ var App = function (_React$Component) {
         { className: 'App' },
         _react2.default.createElement(
           'div',
-          { className: 'wordToGuess' },
-          _react2.default.createElement(
-            'form',
-            { onSubmit: this.addWordToGuess },
-            _react2.default.createElement('input', {
-              type: 'text',
-              placeholder: 'Enter a word to guess',
-              onChange: this.updateInputValue,
-              ref: 'wordToGuess',
-              value: this.state.inputValue
-            }),
-            _react2.default.createElement(
-              'button',
-              { onClick: this.addWordToGuess },
-              'Add'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
           { className: 'guessing' },
           this.state.isWordToGuessSet ? _react2.default.createElement(
             'form',
@@ -22540,11 +22521,30 @@ var App = function (_React$Component) {
               { onClick: this.guessWord },
               'Try'
             )
-          ) : '',
+          ) : _react2.default.createElement(
+            'div',
+            { className: 'wordToGuess' },
+            _react2.default.createElement(
+              'form',
+              { onSubmit: this.addWordToGuess },
+              _react2.default.createElement('input', {
+                type: 'text',
+                placeholder: 'Enter a word to guess',
+                onChange: this.updateInputValue,
+                ref: 'wordToGuess',
+                value: this.state.inputValue
+              }),
+              _react2.default.createElement(
+                'button',
+                { onClick: this.addWordToGuess },
+                'Add'
+              )
+            )
+          ),
           _react2.default.createElement(
             'p',
             null,
-            this.state.wordToGuess !== '' && this.state.isWordToGuessSet && this.state.wordToGuess === this.state.guess ? 'GG' : ''
+            this.state.wordToGuess !== '' && this.state.wordToGuess === this.state.guess && this.state.inputGuessValue === '' ? 'GG' : ''
           ),
           _react2.default.createElement(
             'p',

@@ -3,7 +3,14 @@ import React from 'react';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { wordToGuess: '', inputValue: '', guess: '', nbTry: 0 };
+    this.state = {
+      wordToGuess: '',
+      isWordToGuessSet: false,
+      inputValue: '',
+      guess: '',
+      inputGuessValue: '',
+      nbTry: 0
+    };
     this.updateInputValue = this.updateInputValue.bind(this);
     this.addWordToGuess = this.addWordToGuess.bind(this);
     this.updateInputGuessValue = this.updateInputGuessValue.bind(this);
@@ -20,13 +27,15 @@ class App extends React.Component {
   addWordToGuess(e) {
     e.preventDefault();
     this.setState({
-      inputValue: ''
+      inputValue: '',
+      isWordToGuessSet: true
     });
   }
 
   updateInputGuessValue(e) {
     this.setState({
-      guess: e.target.value
+      guess: e.target.value,
+      inputGuessValue: e.target.value
     });
   }
 
@@ -35,17 +44,19 @@ class App extends React.Component {
     console.log(this.state.guess + ' ' + this.state.wordToGuess);
 
     if (this.state.guess === this.state.wordToGuess) {
-      console.log("C'est bon gg");
       this.setState({
         nbTry: 0
       });
     } else {
       {
         // Modifier le state en fonction du state
+
         this.setState(state => ({ nbTry: state.nbTry + 1 }));
         console.log('Nope essaie encore. Essai n° ' + this.state.nbTry);
+        this.displayNbTry();
       }
     }
+    this.setState({ inputGuessValue: '' });
   }
 
   render() {
@@ -64,14 +75,26 @@ class App extends React.Component {
           </form>
         </div>
         <div className="guessing">
-          <form onSubmit={this.guessWord}>
-            <input
-              type="text"
-              placeholder="Try to guess !"
-              onChange={this.updateInputGuessValue}
-            />
-            <button onClick={this.guessWord}>Try</button>
-          </form>
+
+          {this.state.isWordToGuessSet
+            ? <form onSubmit={this.guessWord}>
+                <input
+                  type="text"
+                  placeholder="Try to guess !"
+                  onChange={this.updateInputGuessValue}
+                  value={this.state.inputGuessValue}
+                />
+                <button onClick={this.guessWord}>Try</button>
+              </form>
+            : ''}
+          <p>
+            {this.state.wordToGuess !== '' &&
+              this.state.isWordToGuessSet &&
+              this.state.wordToGuess === this.state.guess
+              ? 'GG'
+              : ''}
+          </p>
+          <p>{this.state.nbTry === 0 ? '' : 'Essai n° ' + this.state.nbTry}</p>
         </div>
       </div>
     );
